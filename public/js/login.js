@@ -8,7 +8,7 @@ var login_page = 'index.html';
 // FB SDK
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '270085160043418',
+    appId      : '263446590747035',
     cookie     : true,
     xfbml      : true,
     version    : 'v2.5'

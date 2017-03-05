@@ -2,6 +2,9 @@
   "name": "Webstick Server",
   "version": "0.0.1",
   "description": "View your Mac OS stickies online, anywhere",
+  "engines": {
+    "node": "6.0.0"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
