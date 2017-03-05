@@ -1,22 +1,25 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
-  "main": "main.js",
+  "name": "Webstick",
+  "version": "0.0.1",
+  "description": "View your Mac OS stickies online, anywhere",
+  "main": "app.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/ajay-gandhi/webstick",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "stickies",
+    "mac",
+    "osx",
+    "sync"
   ],
-  "author": "GitHub",
+  "author": "Ajay Gandhi",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "pypacker": "^0.2.1",
+    "rtf-parser": "^1.0.4"
   }
 }
