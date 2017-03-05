@@ -1,0 +1,22 @@
+{
+  "name": "Webstick Server",
+  "version": "0.0.1",
+  "description": "View your Mac OS stickies online, anywhere",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/ajay-gandhi/webstick",
+  "keywords": [
+    "stickies",
+    "mac",
+    "osx",
+    "sync"
+  ],
+  "author": "Ajay Gandhi",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "express": "^4.15.0",
+    "pg": "^6.1.2"
+  }
+}
