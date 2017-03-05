@@ -1,0 +1,155 @@
+* {
+  outline: none;
+  margin: 0px;
+  padding: 0px;
+  -webkit-tap-highlight-color: none;
+  -webkit-touch-callout: none
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+  width: 300px;
+  height: 230px;
+  text-align: center;
+}
+#container #content {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background-color: #fff;
+}
+#container footer {
+  display: none;
+  margin-top: 5px;
+}
+#content h1 {
+  margin-bottom: 20px;
+}
+
+.btn {
+  width: 150px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  text-decoration: none;
+}
+.btn:hover {
+  border: 1px solid #999;
+}
+
+/**
+ * Login page
+ */
+.center {
+  position: absolute;
+  top: 120px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+#status {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+}
+#browse-button {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 75px;
+  font-size: 18px;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 6px #415ca9; }
+  50% { box-shadow: 0 0 20px #415ca9; }
+  100% { box-shadow: 0 0 6px #415ca9; }
+}
+@-webkit-keyframes glow {
+  0% { box-shadow: 0 0 6px #415ca9; }
+  50% { box-shadow: 0 0 20px #415ca9; }
+  100% { box-shadow: 0 0 6px #415ca9; }
+}
+.glow {
+  -webkit-animation: glow 2.0s linear infinite;
+  -moz-animation: glow 2.0s linear infinite;
+  -ms-animation: glow 2.0s linear infinite;
+  -o-animation: glow 2.0s linear infinite;
+  animation: glow 2.0s linear infinite;
+}
+
+/**
+ * Add ROM page
+ */
+#input-wrapper input {
+  font-size: 16px;
+  padding: 6px;
+  width: 280px;
+  border: 1px solid #ccc;
+}
+#input-wrapper input:first-child {
+  margin-top: -6px;
+  border-bottom: none;
+}
+#input-wrapper button {
+  margin-top: 7px;
+  padding: 8px;
+}
+#input-wrapper button:disabled {
+  color: #999;
+}
+#input-wrapper {
+  position: relative;
+}
+#input-wrapper #status-message {
+  display: none;
+  position: absolute;
+  top: -5px;
+  left: 9px;
+  right: 9px;
+  bottom: 47px;
+  line-height: 32px;
+  font-size: 16px;
+  color: #fff;
+}
+#input-wrapper #status-message.success {
+  background-color: #5cb85c;
+  border: 2px solid #207c20;
+}
+#input-wrapper #status-message.failure {
+  background-color: #d9534f;
+  border: 2px solid #9d1713;
+}
+#input-wrapper #status-message .full {
+  height: 100%;
+  padding-top: 17px;
+}
+
+/**
+ * About page
+ */
+div.about {
+  margin-top: -10px;
+  padding: 0px 5px;
+  font-size: 15px;
+}
+div.about .subtitle {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 16px;
+}

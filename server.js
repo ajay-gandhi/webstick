@@ -1,7 +1,7 @@
 'use strict';
 
 // NPM modules
-var express    = require('express');
+var express = require('express');
 
 // Local modules
 var UserDB = require('./postgres');

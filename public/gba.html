@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>GBA Play</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/game.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="js/login.js"></script>
+  <script src="gbajs/core.js"></script>
+  <script src="gbajs/arm.js"></script>
+  <script src="gbajs/thumb.js"></script>
+  <script src="gbajs/mmu.js"></script>
+  <script src="gbajs/io.js"></script>
+  <script src="gbajs/audio.js"></script>
+  <script src="gbajs/video.js"></script>
+  <script src="gbajs/video/proxy.js"></script>
+  <script src="gbajs/video/software.js"></script>
+  <script src="gbajs/irq.js"></script>
+  <script src="gbajs/keypad.js"></script>
+  <script src="gbajs/savedata.js"></script>
+  <script src="gbajs/gpio.js"></script>
+  <script src="gbajs/gba.js"></script>
+</head>
+<body>
+  <div id="orientation">
+    <div id="screen-cover">Loading game...</div>
+    <canvas id="screen" width="480" height="320"></canvas>
+
+    <div id="controls">
+      <div class="dpad">
+        <button id="up">up</button>
+        <button id="down">down</button>
+        <button id="left">left</button>
+        <button id="right">right</button>
+      </div>
+      <div class="ab">
+        <button id="a">a</button>
+        <button id="b">b</button>
+      </div>
+      <div class="lr">
+        <button id="l">l</button>
+        <button id="r">r</button>
+      </div>
+      <div class="ss">
+        <button id="start">start</button>
+        <button id="select">select</button>
+      </div>
+    </div>
+  <!--   <div id="slider">
+      <p><span id="fps">0</span> frames per second</p>
+    </div>
+  -->
+  </div>
+
+  <div id="menu-open">&#x2630;</div>
+  <div id="menu">
+    <div id="close">&times;</div>
+    <h2>paused</h2>
+    <div id="save-interface">
+      <input type="text" id="save-name" placeholder="Name" />
+      <button id="create-save">Save</button>
+      <div id="save-type"></div>
+      <input type="checkbox" checked="true" id="offline-save" />
+      <div id="save-status"></div>
+    </div>
+    <div class="separation"></div>
+    <button id="back-to-browse">Game Browser</button>
+    <div class="note">Bookmark this page to play immediately!</div>
+    <div class="nav">
+      <a href="/">Home</a> &bull;
+      <a href="about.html">About</a> &bull;
+      <a href="browse.html">Browse</a> &bull;
+      <a href="add.html">Add ROM</a>
+    </div>
+  </div>
+  <script src="js/gba_app.js"></script>
+</body>
+</html>

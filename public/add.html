@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>GBA Play | Add ROM</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/interface.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="js/login.js"></script>
+  <script>
+  $(document).on('fully_ready', function () {
+    $('#add-rom-button').click(function () {
+      $(this).prop('disabled', 'true');
+      var rom_link = $('#rom-link').val();
+      var rom_name = $('#rom-name').val();
+
+      // Validate ROM name
+      var errors = '<br />';
+      if (!/^[a-zA-Z0-9\s]*$/.test(rom_name))
+        errors = 'Only alphanumeric and \' \' allowed.' + errors;
+
+      // Validate ROM url
+      if (ext(rom_link) !== '.gba')
+        errors += 'URL must have <code>\'.gba\'</code> extension.';
+      else if (!/^(http|https):\/\//.test(rom_link))
+        errors += 'URL must begin with <code>http(s)://</code>';
+
+      if (errors !== '<br />') {
+        display_status_message(errors, false);
+        return;
+      }
+
+      // Send to server
+      $.ajax({
+        url: 'addRom',
+        data: {
+          rom_name: rom_name,
+          rom_url: rom_link
+        }
+      })
+      .done(function (status) {
+        if (status) {
+          display_status_message('<div class="full">ROM added!</div>', status);
+        } else {
+          var full_msg = '<div class="full">' + status.message + '</div>';
+          display_status_message(status.message, false);
+        }
+      });
+    });
+
+    // Submit ROM on enter
+    $('input').keypress(function (e) {
+      if (e.which == 13) {
+        $('#add-rom-button').click();
+        return false;
+      }
+    });
+
+    $('footer').fadeIn();
+  });
+
+  var display_status_message = function (msg, successful) {
+    if (successful) {
+      $('#input-wrapper #status-message')
+        .removeClass('failure')
+        .addClass('success')
+        .html(msg);
+    } else {
+      $('#input-wrapper #status-message')
+        .removeClass('success')
+        .addClass('failure')
+        .html(msg);
+    }
+
+    $('#add-rom-button').removeAttr('disabled');
+    $('#input-wrapper #status-message').fadeIn();
+    setTimeout(function () {
+      $('#input-wrapper #add-rom-button').removeAttr('disabled');
+      $('#input-wrapper #status-message').fadeOut();
+    }, successful ? 2000 : 4000);
+  }
+
+  /**
+   * Gets file extension from URL
+   */
+  var ext = function (url) {
+    url = url.substr(1 + url.lastIndexOf('/')).split('?')[0].split('#')[0];
+    return url.substr(url.lastIndexOf('.'));
+  }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div id="content">
+      <h1>GBA Play</h1>
+      <div id="input-wrapper">
+        <input type="text" id="rom-name" placeholder="ROM name" autofocus="true" />
+        <input type="text" id="rom-link" placeholder="Direct link to ROM"/>
+        <button id="add-rom-button" class="btn">Add ROM</button>
+        <div id="status-message"></div>
+      </div>
+    </div>
+    <footer>
+      <a href="/">Home</a> &bull;
+      <a href="about.html">About</a> &bull;
+      <a href="browse.html">Browse</a> &bull;
+      <a href="add.html">Add ROM</a>
+    </footer>
+  </div>
+</body>
+</html>

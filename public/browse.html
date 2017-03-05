@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>GBA Play | Browse Games</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/game.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="js/login.js"></script>
+  <script>
+  var LOCALSTORAGE_KEY = 'com.herokuapp.gbaplay.save';
+  var inflight = false;
+  $(document).on('fully_ready', function () {
+
+    // List ROMs
+    $.ajax({
+      url: 'listRoms'
+    })
+    .done(function(roms) {
+      roms = JSON.parse(roms);
+
+      var selections = $('#selections').html('');
+      roms.forEach(function (rom) { 
+        selections.append('<li data-rom-name="' + rom + '">' + rom +
+          '<button class="delete-button">Delete</button></li>');
+      });
+
+      // Rom selected
+      $('#selections li').click(function () {
+        if (inflight) return;
+        var rom_name = $(this).attr('data-rom-name');
+
+        // Get saves
+        var local_saves = list_local_saves(rom_name) || [];
+        $.ajax({
+          url: 'listSaves',
+          data: { rom_name: rom_name }
+        })
+        .done(function(saves) {
+          // No saves
+          if (!saves && local_saves.length == 0) {
+            goto_gba(rom_name);
+            return;
+          }
+          saves = JSON.parse(saves);
+
+          // Display saves
+          $.when(
+            $('#selections li').slideUp()
+          )
+          .done(function() {
+            inflight = false;
+            selections = $('#selections').html('');
+
+            $('#select-game').prepend('<div class="note">choose a save</div>');
+
+            // Add new game option
+            $('<li style="display:none;" class="bold"' +
+              'data-savename="{{new_game}}">New Game</li>')
+              .appendTo(selections);
+
+            local_saves.forEach(function (save) { 
+              var new_li = '<li style="display:none;" data-local="true" ' +
+                'data-savename="' + save + '"><span>Local </span>' + save +
+                '<button class="delete-button">Delete</button></li>';
+
+              $(new_li).appendTo(selections);
+            });
+
+            saves.forEach(function (save) { 
+              var new_li = '<li style="display:none;" data-local="false" ' +
+                'data-savename="' + save + '">' + save +
+                '<button class="delete-button">Delete</button></li>';
+
+              $(new_li).appendTo(selections);
+            });
+
+            $('#selections li, #select-game .note').slideDown();
+            $('#select-game').animate({
+              bottom: '+=45'
+            });
+
+            $('#selections li').click(function () {
+              if (inflight) return;
+
+              // New game
+              if ($(this).attr('data-savename') === '{{new_game}}') {
+                return goto_gba(rom_name);
+              }
+              var is_local = $(this).attr('data-local') === 'true';
+              goto_gba(rom_name, $(this).attr('data-savename'), is_local);                
+            });
+
+            // Delete save
+            $('.delete-button').click(function (e) {
+              e.stopPropagation();
+              var li = $(this).parent('li');
+              var is_local = li.attr('data-local') === 'true';
+
+              if (is_local) {
+                try {
+                  var storage = window.localStorage;
+
+                  var parsed_storage = JSON.parse(storage[LOCALSTORAGE_KEY]);
+                  delete parsed_storage[rom_name][li.attr('data-savename')];
+
+                  storage[LOCALSTORAGE_KEY] = JSON.stringify(parsed_storage);
+                  li.slideUp('normal', function () { $(this).remove(); });
+                } catch (e) {}
+
+              } else {
+                // Delete from server
+                $.ajax({
+                  url: 'deleteSave',
+                  data: {
+                    rom_name: rom_name,
+                    save_name: li.attr('data-savename')
+                  }
+                })
+                .done(function (msg) {
+                  if (msg) {
+                    li.slideUp('normal', function () {
+                      $(this).remove();
+                    });
+                  }
+                });
+              }
+            });
+          });
+        });
+      });
+
+      // Delete ROM
+      $('.delete-button').click(function (e) {
+        e.stopPropagation();
+        var li = $(this).parent('li');
+        var rom_name = li.attr('data-rom-name');
+
+        $.ajax({
+          url: 'deleteRom',
+          data: { rom_name: rom_name }
+        })
+        .done(function (msg) {
+          if (msg) li.slideUp('normal', function () { $(this).remove(); });
+        });
+      });
+    });
+
+    // Rom search filter
+    $('#search').on('change keyup paste', function () {
+      var searchterm = $(this).val().toLowerCase();
+      $('ul').children(':not(.bold)').each(function () {
+        var hide = $(this).contents().filter(function () { 
+          return this.nodeType == 3;
+        })[0].nodeValue.toLowerCase().indexOf(searchterm) < 0;
+
+        // var hide = $(this).text().toLowerCase().indexOf(searchterm) < 0;
+        $(this).toggleClass('hidden', hide);
+      });
+    });
+  });
+
+  /**
+   * Fades to white, then redirects
+   */
+  var goto_gba = function (rom, save, local) {
+    var url = 'gba.html?rom=' + rom;
+    if (save) url += '&save=' + save + '&local=' + local;
+
+    $('<div class="cover" id="cover-light"></div>')
+      .appendTo('body')
+      .fadeIn('fast', function () {
+        window.location = url;
+      });
+  }
+
+  /**
+   * Gets list of games from localStorage
+   */
+  var list_local_saves = function (rom) {
+    rom = decodeURIComponent(rom);
+    try {
+      var storage = window.localStorage;
+      if (!storage[LOCALSTORAGE_KEY]) return [];
+
+      var parsed_storage = JSON.parse(storage[LOCALSTORAGE_KEY]);
+      if (!parsed_storage[rom]) return [];
+
+      return Object.keys(parsed_storage[rom]);
+    } catch (e) {
+      return [];
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <header>
+      <h1>GameBoy Advance</h1>
+    </header>
+    <div id="select-game">
+      <input type="text" id="search" placeholder="Search" />
+      <ul id="selections">
+        <li>Loading ROMs...</li>
+      </ul>
+    </div>
+    <footer>
+    <p>Ajay Gandhi <a href="http://ajay-gandhi.com">ajay-gandhi.com</a></p>
+    <div class="right">
+      <a href="/">Home</a> &bull;
+      <a href="about.html">About</a> &bull;
+      <a href="add.html">Add ROM</a>
+    </div>
+    </footer>
+  </div>
+</body>
+</html>

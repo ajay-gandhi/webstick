@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>GBA Play</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/interface.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+  <script>
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId      : '270085160043418',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+
+    // Check login status
+    check_login_state('Logged in as ');
+  };
+
+  // Load FB SDK
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  /**
+   * Finished with login button, check state
+   */
+  var check_login_state = function (msg) {
+    FB.getLoginStatus(function (response) {
+      if (response.status === 'connected') {
+        $('#fb-button').removeClass('glow');
+        FB.api('/me', function (res) {
+          $('#status').text(msg + res.name.split(' ')[0] + '!');
+          $('footer').fadeIn();
+
+          // Display browse button after 1 second
+          setTimeout(function () {
+            $('.center').stop().animate({
+              top: '140px'
+            });
+            $('#status').stop().fadeOut();
+            $('#browse-button').stop().fadeIn();
+          }, 1000);
+        });
+
+      } else {
+        $('#fb-button').addClass('glow');
+        // Hide browse button, etc
+        $('.center').stop().animate({
+          top: '120px'
+        });
+        $('#status').stop().fadeIn();
+        $('#browse-button').stop().fadeOut();
+        $('footer').fadeOut();
+
+        if (response.status === 'not_authorized') {
+          $('#status').text('Please login to this app.');
+        } else {
+          $('#status').text('Please log in to Facebook.');
+        }
+      }
+    });
+  }
+  </script>
+  <div id="container">
+    <div id="content">
+      <h1>GBA Play</h1>
+      <div id="status">Checking login status...</div>
+      <a id="browse-button" class="btn" href="browse.html">Browse Games</a>
+      <div class="center">
+        <fb:login-button id="fb-button" scope="public_profile,email" onlogin="check_login_state('Welcome, ');" size="xlarge" auto-logout-link="true"></fb:login-button>
+      </div>
+    </div>
+    <footer>
+      <a href="/">Home</a> &bull;
+      <a href="about.html">About</a> &bull;
+      <a href="browse.html">Browse</a> &bull;
+      <a href="add.html">Add ROM</a>
+    </footer>
+  </div>
+</body>
+</html>

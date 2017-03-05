@@ -1,0 +1,501 @@
+* {
+  outline: none;
+  margin: 0px;
+  padding: 0px;
+  -webkit-tap-highlight-color: none;
+  -webkit-touch-callout: none
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+#container {
+  max-width: 700px;
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  position: relative;
+}
+
+footer {
+  padding: 10px 20px;
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+}
+footer .right {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.cover {
+  display: none;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+#cover-light {
+  background-color: #fff;
+  z-index: 999;
+}
+#cover-dark {
+  display: block;
+  background-color: #000;
+  opacity: 0;
+  z-index: 100;
+}
+
+/**
+ * Game Selection
+ */
+header {
+  text-align: center;
+}
+header h1 {
+  margin: 25px 0px;
+}
+
+#select-game {
+  margin: 0px 10px;
+  position: absolute;
+  top: 60px;
+  bottom: 120px;
+  left: 0px;
+  right: 0px;
+}
+#select-game .note {
+  font-variant: small-caps;
+  font-size: 18px;
+  margin: 10px 30px;
+  display: none;
+}
+#select-game input {
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+ul#selections {
+  list-style-type: none;
+  width: 100%;
+  height: 100%;
+  margin-top: -1px;
+  overflow: auto;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+ul#selections li {
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+}
+ul#selections li:first-child {
+  border-top: 1px solid #ccc;
+}
+ul#selections li.bold {
+  font-weight: bold;
+}
+ul#selections li.hidden {
+  display: none;
+}
+ul#selections .delete-button {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 5px;
+  background-color: #fff;
+  border: none;
+  border-left: 1px solid #ccc;
+  padding: 0px 5px 0px 10px;
+  color: #333;
+}
+ul#selections span {
+  color: #888;
+  font-size: 16px;
+}
+
+/**
+ * Game
+ */
+#screen-cover {
+  padding-top: 30%;
+  font-size: 30px;
+  text-align: center;
+}
+
+/**
+ * Portait mode
+ */
+/**
+ * Controls
+ */
+.portrait #controls {
+  position: relative;
+}
+.portrait #controls button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.portrait #controls button:active {
+  border: 1px solid #888;
+}
+
+.portrait .ab {
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  width: 130px;
+  height: 130px;
+}
+.portrait .ab button {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+.portrait .ab #a {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+}
+.portrait .ab #b {
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+}
+
+.portrait .dpad {
+  position: absolute;
+  top: 50px;
+  left: 15px;
+  width: 170px;
+  height: 170px;
+}
+.portrait .dpad button {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+}
+.portrait .dpad #up {
+  position: absolute;
+  top: 0px;
+  left: 55px;
+}
+.portrait .dpad #down {
+  position: absolute;
+  bottom: 0px;
+  left: 55px;
+}
+.portrait .dpad #left {
+  position: absolute;
+  bottom: 55px;
+  left: 0px;
+}
+.portrait .dpad #right {
+  position: absolute;
+  bottom: 55px;
+  right: 0px;
+}
+
+.portrait .lr {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+}
+.portrait .lr button {
+  width: 80px;
+  height: 45px;
+  border-radius: 10px;
+}
+.portrait .lr #l {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.portrait .lr #r {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.portrait .ss {
+  position: absolute;
+  top: 255px;
+  width: 100%;
+  text-align: center;
+}
+.portrait .ss button {
+  border-radius: 5px;
+  width: 80px;
+  height: 35px;
+}
+
+/**
+ * Landscape mode
+ */
+.landscape {
+  text-align: center;
+  margin-left: 40px;
+}
+.landscape canvas {
+  margin: 0 auto;
+  display: inline;
+}
+
+/**
+ * Controls
+ */
+.landscape #controls {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+}
+.landscape #controls button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.landscape #controls button:active {
+  border: 1px solid #888;
+}
+
+.landscape .ab {
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  width: 130px;
+  height: 130px;
+}
+.landscape .ab button {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+.landscape .ab #a {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+}
+.landscape .ab #b {
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+}
+
+.landscape .dpad {
+  position: absolute;
+  top: 50px;
+  left: 15px;
+  width: 170px;
+  height: 170px;
+}
+.landscape .dpad button {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+}
+.landscape .dpad #up {
+  position: absolute;
+  top: 0px;
+  left: 55px;
+}
+.landscape .dpad #down {
+  position: absolute;
+  bottom: 0px;
+  left: 55px;
+}
+.landscape .dpad #left {
+  position: absolute;
+  bottom: 55px;
+  left: 0px;
+}
+.landscape .dpad #right {
+  position: absolute;
+  bottom: 55px;
+  right: 0px;
+}
+
+.landscape .lr {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+}
+.landscape .lr button {
+  width: 80px;
+  height: 45px;
+}
+.landscape .lr #l {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-right-radius: 10px;  
+  border-bottom-right-radius: 10px;  
+}
+.landscape .lr #r {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.landscape .ss {
+  position: absolute;
+  top: 255px;
+  left: 0px;
+  width: 200px;
+  height: 100px;
+}
+.landscape .ss button {
+  border-radius: 5px;
+  width: 80px;
+  height: 35px;
+  margin-bottom: 10px;
+}
+
+/**
+ * Menu
+ */
+#menu-open {
+  position: fixed;
+  bottom: -1px;
+  right: 10px;
+  padding: 2px 10px;
+  border: 1px solid #ccc;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+#menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 260px;
+  padding: 10px;
+  display: none;
+  background-color: #f2f2f2;
+  border: 2px solid #333;
+  border-radius: 10px;
+  z-index: 101;
+  text-align: center;
+  -webkit-box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.90);
+  -moz-box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.90);
+  box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.90);
+}
+#menu #close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 1px 2px 8px 3px;
+  line-height: .5em;
+  color: #999;
+  font-size: 38px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#menu #close:hover {
+  color: #666;
+}
+#menu h2 {
+  font-variant: small-caps;
+  font-weight: 200;
+  font-size: 36px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+#save-interface {
+  position: relative;
+  width: 275px;
+}
+#save-interface #save-name {
+  font-size: 16px;
+  padding: 10px;
+  width: 215px;
+  border: 1px solid #ccc;
+}
+#save-interface #create-save {
+  padding: 10px;
+  margin-left: -4px;
+  font-size: 16px;
+  width: 60px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-left: none;
+  color: #666;
+}
+#save-interface #offline-save {
+  position: absolute;
+  top: 11px;
+  left: 190px;
+}
+#save-interface #save-type {
+  display: none;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 61px;
+  bottom: 1px;
+  padding-top: 10px;
+  font-size: 16px;
+  color: #000;
+  background-color: #fff;
+}
+#save-interface #save-status {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding-top: 8px;
+  font-size: 16px;
+  color: #fff;
+}
+#save-interface #save-status.success {
+  background-color: #5cb85c;
+  border: 2px solid #207c20;
+}
+#save-interface #save-status.failure {
+  background-color: #d9534f;
+  border: 2px solid #9d1713;
+}
+
+#menu .separation {
+  margin-top: 20px;
+}
+#menu #back-to-browse {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #666;
+}
+#menu .note {
+  font-size: 12px;
+  color: #888;
+  margin-top: 20px;
+}
+#menu .nav {
+  margin: 2px 0px;
+}

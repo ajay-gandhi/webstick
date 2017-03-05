@@ -1,0 +1,18 @@
+<html>
+<body>
+<script>
+var l = 'https://www.dropbox.com/s/v9jex9888cv84la/Advance%20Wars%202%20-%20Black%20Hole%20Rising.gba?dl=1';
+function loadFile(url, callback, as_string) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  console.log(url);
+  if (typeof as_string === 'undefined') xhr.responseType = 'arraybuffer';
+
+  xhr.onload = function () { console.log(xhr.response) };
+  xhr.send();
+}
+console.log('k');
+loadFile(l, console.log);
+</script>
+</body>
+</html>
