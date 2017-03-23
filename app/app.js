@@ -1,8 +1,12 @@
 
-const { app, Menu, Tray, globalShortcut } = require('electron');
+const { app, Menu, Tray, globalShortcut, BrowserWindow } = require('electron');
 
-const fs       = require('fs');
-const stickies = require('./stickies');
+const request     = require('request');
+const Configstore = require('configstore');
+const fs          = require('fs');
+const stickies    = require('./stickies');
+
+const conf = new Configstore(require('./package.json').name);
 
 let tray = null;
 let stickies_path = process.env['HOME'] + '/Library/StickiesDatabase';
@@ -32,6 +36,25 @@ let initialize = function () {
       create_tray();
     }
   });
+
+  if (!conf.get('fb_user_id')) {
+    // Load FB login
+    fbWindow = new BrowserWindow({ width: 800, height: 600 })
+
+    fbWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'fb.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
+
+    // Emitted when the window is closed.
+    fbWindow.on('closed', function () {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      fbWindow = null
+    })
+  }
 }
 
 /**
@@ -40,6 +63,7 @@ let initialize = function () {
 let sync_stickies = function () {
   stickies(stickies_path, (rtfs) => {
     console.log('Got', rtfs.length, 'stickies, sending to backend');
+    console.log(conf.get('fb_user_id'));
   });
 }
 

@@ -19,7 +19,9 @@
     "electron": "^1.4.1"
   },
   "dependencies": {
+    "configstore": "^3.0.0",
     "pypacker": "^0.2.1",
+    "request": "^2.80.0",
     "rtf-parser": "^1.0.4"
   }
 }

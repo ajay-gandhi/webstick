@@ -14,13 +14,6 @@ app.set('port', (process.env.PORT || 8000));
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(function (req, res, next) {
-  if (req.method.toLowerCase() === 'post' && !req.body.user_id) {
-    console.log('Request without user!', req.body);
-  }
-  next();
-});
-
 /**
  * Receive stickies, save them in db
  */
