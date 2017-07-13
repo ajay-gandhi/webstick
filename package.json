@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "View your Mac OS stickies online, anywhere",
   "engines": {
-    "node": "6.0.0"
+    "node": "6.11.1"
   },
   "main": "server.js",
   "scripts": {
